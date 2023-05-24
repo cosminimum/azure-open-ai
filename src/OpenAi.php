@@ -14,6 +14,7 @@ class OpenAi
     private int $timeout = 0;
     private object $stream_method;
     private string $customUrl = "";
+    private string $version = "";
     private string $proxy = "";
     private array $curlInfo = [];
 
@@ -482,7 +483,7 @@ class OpenAi
     {
         if ($header) {
             foreach ($header as $key => $value) {
-                $this->headers[$key] = $value;
+                $this->headers[] = $value;
             }
         }
     }
@@ -494,6 +495,13 @@ class OpenAi
     {
         if ($org != "") {
             $this->headers[] = "OpenAI-Organization: $org";
+        }
+    }
+
+    public function setVersion(string $version)
+    {
+        if ($version != "") {
+            $this->version = $version;
         }
     }
 
@@ -557,7 +565,11 @@ class OpenAi
     private function baseUrl(string &$url)
     {
         if ($this->customUrl != "") {
-            $url = str_replace(Url::ORIGIN, $this->customUrl, $url);
+            $url = str_replace(Url::OPEN_AI_URL, $this->customUrl, $url);
+        }
+
+        if ($this->version != "") {
+            $url = $url . "?api-version=" . $this->version;
         }
     }
 }
