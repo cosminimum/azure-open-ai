@@ -4,7 +4,7 @@ namespace Orhanerday\OpenAi;
 
 class Url
 {
-    public const OPEN_AI_URL = 'https://api.openai.com';
+    public const OPEN_AI_URL = 'https://api.openai.com/v1';
 
     /**
      * @deprecated
